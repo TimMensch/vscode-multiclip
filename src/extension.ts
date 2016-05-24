@@ -73,23 +73,23 @@ export function activate(context: vscode.ExtensionContext) {
 				edit.replace(sel, txt);
 			});
 		}).then(() => {
-				// Grab a copy of the current selection array
-				const tmpSelections = e.selections;
+			// Grab a copy of the current selection array
+			const tmpSelections = e.selections;
 
-				// Grab the current primary selection
-				const sel = tmpSelections[ 0 ];
+			// Grab the current primary selection
+			const sel = tmpSelections[ 0 ];
 
-				// Change the current selection array to contain a single item
-				// that encompasses the entire pasted block.
-				e.selections = [ sel ];
+			// Change the current selection array to contain a single item
+			// that encompasses the entire pasted block.
+			e.selections = [ sel ];
 
-				// Send the pasted value to the system clipboard.
-				vscode.commands.executeCommand("editor.action.clipboardCopyAction")
-					.then(() => {
-						// Restore the previous selection(s)
-						e.selections = tmpSelections;
-					});
-			});
+			// Send the pasted value to the system clipboard.
+			vscode.commands.executeCommand("editor.action.clipboardCopyAction")
+				.then(() => {
+					// Restore the previous selection(s)
+					e.selections = tmpSelections;
+				});
+		});
 	}
 	disposables.push( vscode.commands.registerCommand('multiclip.paste', () => {
 		if (copyBuffer.length == 0) {
